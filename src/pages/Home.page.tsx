@@ -1,50 +1,68 @@
-import { TextInput } from '@mantine/core';
+import { Pagination, TextInput } from '@mantine/core';
 import { ChangeEvent, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import { searchMovies } from '../services/searchMovies';
-import { Pagination } from '@mantine/core';
-import { Movie, SearchResponse } from '../types';
-import Cards from '../components/Cards';
+import MovieList from '../components/MovieList/MovieList';
+import { search } from '../services/movieService';
+import { SearchResponse } from '../types';
+import Layout from '../components/Layout/Layout';
 
 const ITEMS_PER_PAGE = 10;
+const TMDB_ITEMS_PER_PAGE = 20;
+const QUOTIENT = TMDB_ITEMS_PER_PAGE / ITEMS_PER_PAGE;
 
-export function HomePage() {
+const HomePage = () => {
+  const [activePage, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>('');
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
-  const [activePage, setPage] = useState(1);
-
-  const handleSearch = useDebouncedCallback(
-    async (event: ChangeEvent<HTMLInputElement>) => {
-      const { value } = event.target;
-      const response = await searchMovies(value);
-      setSearchResponse(response);
-    },
-    300,
-  );
-
-  // const totalMovies = searchResponse?.length ?? 0;
 
   const totalPages =
-    searchResponse &&
-    (searchResponse?.total_pages * searchResponse?.results.length) /
-      ITEMS_PER_PAGE;
+    (searchResponse &&
+      Math.ceil(searchResponse?.total_results / ITEMS_PER_PAGE)) ??
+    0;
 
-  console.log('totalPages: ', totalPages);
+  const getMovieItems = () => {
+    const allMovies = searchResponse?.results ?? [];
+
+    const items =
+      activePage % 2 == 0 ? allMovies?.slice(10) : allMovies?.slice(0, 10);
+    return items;
+  };
+
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const searchQuery = event.target.value;
+    setQuery(searchQuery);
+    handleSearch(searchQuery);
+  };
+
+  const handleSearch = useDebouncedCallback(async (searchQuery: string) => {
+    const response = await search(searchQuery);
+    setSearchResponse(response);
+    setPage(1);
+  }, 300);
+
+  const onPageChange = async (page: number) => {
+    setPage(page);
+    const pageParam = Math.ceil(page / QUOTIENT);
+    const response = await search(query, pageParam);
+    setSearchResponse(response);
+  };
 
   return (
-    <>
+    <Layout>
       <TextInput
         placeholder="Search movies..."
-        defaultValue=""
-        onChange={handleSearch}
+        value={query}
+        onChange={onSearchChange}
       />
-      <div>Movies count: {searchResponse?.total_results}</div>
-      <Cards movies={searchResponse?.results ?? []} />
+      <MovieList items={getMovieItems()} />
       <Pagination
-        total={totalPages ?? 0}
+        total={totalPages}
         value={activePage}
-        onChange={setPage}
+        onChange={onPageChange}
         mt="sm"
       />
-    </>
+    </Layout>
   );
-}
+};
+
+export default HomePage;

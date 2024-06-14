@@ -1,5 +1,5 @@
-import { SEARCH_URL } from '../constants';
-import { SearchResponse } from '../types';
+import { API_BASE_URL, SEARCH_URL } from '../constants';
+import { Movie, SearchResponse } from '../types';
 
 const options = {
   method: 'GET',
@@ -10,7 +10,7 @@ const options = {
   },
 };
 
-export const searchMovies = async (
+export const search = async (
   query: string = '',
   page: number = 1,
 ): Promise<SearchResponse> => {
@@ -20,6 +20,12 @@ export const searchMovies = async (
   params.append('page', page.toString());
   const url = new URL(`${initialUrl.origin}${initialUrl.pathname}?${params}`);
 
+  const response = await fetch(url, options);
+  return response.json();
+};
+
+export const getDetails = async (id: string): Promise<Movie> => {
+  const url = `${API_BASE_URL}/movie/${id}`;
   const response = await fetch(url, options);
   return response.json();
 };

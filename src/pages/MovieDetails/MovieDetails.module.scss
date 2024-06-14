@@ -1,0 +1,18 @@
+.details {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.image {
+  flex-basis: 300px;
+  flex-shrink: 0;
+}
+
+.genre {
+  margin-right: 5px;
+}
