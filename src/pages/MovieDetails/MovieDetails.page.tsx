@@ -1,24 +1,13 @@
-import { useEffect, useState } from 'react';
-import { Movie } from '../../types';
-import { getDetails } from '../../services/movieService';
+import { Image, Pill, Text, Title } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-import classes from './MovieDetails.module.scss';
-import { Image, Title, Text, Pill } from '@mantine/core';
-import { IMAGE_BASE_URL } from '../../constants';
 import Layout from '../../components/Layout/Layout';
+import { IMAGE_BASE_URL } from '../../constants';
+import useFetchDetails from '../../hooks/useFetchDetails';
+import classes from './MovieDetails.module.scss';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const [details, setDetails] = useState<Movie>();
-
-  useEffect(() => {
-    (async (id) => {
-      if (id) {
-        const movieDetails = await getDetails(id);
-        setDetails(movieDetails);
-      }
-    })(movieId);
-  }, [movieId]);
+  const details = useFetchDetails(movieId);
 
   return (
     <Layout>

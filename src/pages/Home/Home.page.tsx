@@ -1,20 +1,27 @@
 import { Pagination, TextInput } from '@mantine/core';
-import { ChangeEvent, useState } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
-import MovieList from '../../components/MovieList/MovieList';
-import { search } from '../../services/movieService';
-import { SearchResponse } from '../../types';
+import { Dispatch, SetStateAction, useState } from 'react';
 import Layout from '../../components/Layout/Layout';
+import MovieList from '../../components/MovieList/MovieList';
+import useSearchMovies from '../../hooks/useSearchMovies';
+import { search } from '../../services/movieService';
 import classes from './Home.module.scss';
+import { SearchResponse } from '../../types';
 
 const ITEMS_PER_PAGE = 10;
 const TMDB_ITEMS_PER_PAGE = 20;
 const QUOTIENT = TMDB_ITEMS_PER_PAGE / ITEMS_PER_PAGE;
 
-const HomePage = () => {
+const HomePage = ({
+  query,
+  setQuery,
+}: {
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
+}) => {
   const [activePage, setPage] = useState<number>(1);
-  const [query, setQuery] = useState<string>('');
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
+
+  useSearchMovies(query, setPage, setSearchResponse);
 
   const totalPages =
     (searchResponse &&
@@ -31,18 +38,6 @@ const HomePage = () => {
     return items;
   };
 
-  const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const searchQuery = event.target.value;
-    setQuery(searchQuery);
-    handleSearch(searchQuery);
-  };
-
-  const handleSearch = useDebouncedCallback(async (searchQuery: string) => {
-    const response = await search(searchQuery);
-    setSearchResponse(response);
-    setPage(1);
-  }, 300);
-
   const onPageChange = async (page: number) => {
     setPage(page);
     const pageParam = Math.ceil(page / QUOTIENT);
@@ -55,7 +50,7 @@ const HomePage = () => {
       <TextInput
         placeholder="Search movies..."
         value={query}
-        onChange={onSearchChange}
+        onChange={(event) => setQuery(event.target.value)}
         className={classes.input}
         mb="xl"
       />
