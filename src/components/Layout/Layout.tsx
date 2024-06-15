@@ -16,7 +16,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
           />
         </Link>
       </AppShell.Header>
-      <AppShell.Main>{children}</AppShell.Main>
+      <AppShell.Main className={classes.main}>{children}</AppShell.Main>
     </AppShell>
   );
 };

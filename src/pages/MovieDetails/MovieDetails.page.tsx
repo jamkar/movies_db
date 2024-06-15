@@ -22,24 +22,28 @@ const MovieDetails = () => {
 
   return (
     <Layout>
-      <div className={classes.details}>
-        <div className={classes.image}>
-          <Image
-            radius="md"
-            w={300}
-            h={450}
-            alt={details?.title}
-            src={`${IMAGE_BASE_URL}/w300/${details?.poster_path}`}
-            fallbackSrc="https://placehold.co/300x450?text=No Image"
-          />
-        </div>
+      <div className={classes.container}>
+        <Image
+          className={classes.image}
+          radius="md"
+          alt={details?.title}
+          src={`${IMAGE_BASE_URL}/w780/${details?.poster_path}`}
+          fallbackSrc="https://placehold.co/300x450?text=No Image"
+        />
         <div className={classes.description}>
-          <Title className={classes.title}>{details?.title}</Title>
+          <Title mb="xs" className={classes.title}>
+            {details?.title}
+          </Title>
           {details?.genres.map((genre) => (
-            <Pill className={classes.genre}>{genre.name}</Pill>
+            <Pill mr="xs" key={genre.id} className={classes.genre}>
+              {genre.name}
+            </Pill>
           ))}
-          <Text size="md" c="dimmed">
+          <Text mb="xs" mt="xs" size="md" c="dimmed">
             Release Date: {details?.release_date}
+          </Text>
+          <Text mb="xs" size="md" c="dimmed">
+            Rating: {details?.vote_average}
           </Text>
           <Text size="lg">Overview</Text>
           <Text size="md">{details?.overview}</Text>

@@ -1,11 +1,18 @@
 .card {
   display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
+  margin-bottom: var(--mantine-spacing-sm);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    flex-direction: row;
+  }
 }
 
 .image {
-  flex-basis: 100px;
-  flex-shrink: 0;
-  margin-right: 10px;
+  @media (min-width: $mantine-breakpoint-xs) {
+    width: rem(100px);
+  }
+}
+
+.textBlock {
+  padding: var(--mantine-spacing-xs);
 }

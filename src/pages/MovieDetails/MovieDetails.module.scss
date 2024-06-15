@@ -1,18 +1,23 @@
-.details {
+.container {
   display: flex;
-  gap: 20px;
-  padding: 20px;
-}
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs);
 
-.title {
-  margin-bottom: 10px;
+  @media (min-width: $mantine-breakpoint-sm) {
+    flex-direction: row;
+    gap: var(--mantine-spacing-lg);
+    padding: var(--mantine-spacing-lg);
+  }
 }
 
 .image {
-  flex-basis: 300px;
-  flex-shrink: 0;
+  @media (min-width: $mantine-breakpoint-sm) {
+    width: rem(300);
+    height: rem(450);
+  }
 }
 
-.genre {
-  margin-right: 5px;
+.description {
+  padding: var(--mantine-spacing-xs);
 }

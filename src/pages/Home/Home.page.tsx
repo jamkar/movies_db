@@ -1,10 +1,11 @@
 import { Pagination, TextInput } from '@mantine/core';
 import { ChangeEvent, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import MovieList from '../components/MovieList/MovieList';
-import { search } from '../services/movieService';
-import { SearchResponse } from '../types';
-import Layout from '../components/Layout/Layout';
+import MovieList from '../../components/MovieList/MovieList';
+import { search } from '../../services/movieService';
+import { SearchResponse } from '../../types';
+import Layout from '../../components/Layout/Layout';
+import classes from './Home.module.scss';
 
 const ITEMS_PER_PAGE = 10;
 const TMDB_ITEMS_PER_PAGE = 20;
@@ -24,7 +25,9 @@ const HomePage = () => {
     const allMovies = searchResponse?.results ?? [];
 
     const items =
-      activePage % 2 == 0 ? allMovies?.slice(10) : allMovies?.slice(0, 10);
+      activePage % 2 == 0
+        ? allMovies?.slice(ITEMS_PER_PAGE)
+        : allMovies?.slice(0, ITEMS_PER_PAGE);
     return items;
   };
 
@@ -53,13 +56,17 @@ const HomePage = () => {
         placeholder="Search movies..."
         value={query}
         onChange={onSearchChange}
+        className={classes.input}
+        mb="xl"
       />
       <MovieList items={getMovieItems()} />
       <Pagination
         total={totalPages}
         value={activePage}
         onChange={onPageChange}
-        mt="sm"
+        ml="auto"
+        mr="auto"
+        w="fit-content"
       />
     </Layout>
   );
