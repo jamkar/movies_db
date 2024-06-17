@@ -27,7 +27,6 @@ const MovieList = ({ items }: { items: Movie[] }) => {
                     fallbackSrc="https://placehold.co/100x150?text=No Image"
                   />
                 </div>
-
                 <div className={classes.textBlock}>
                   <Text mb="xs" size="lg" fw={500}>
                     {item.title}
