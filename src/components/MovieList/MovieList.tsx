@@ -20,12 +20,14 @@ const MovieList = ({ items }: { items: Movie[] }) => {
                 radius="md"
                 withBorder
               >
-                <Image
-                  className={classes.image}
-                  alt={item.title}
-                  src={`${IMAGE_BASE_URL}/w300/${item.poster_path}`}
-                  fallbackSrc="https://placehold.co/100x150?text=No Image"
-                />
+                <div className={classes.image}>
+                  <Image
+                    alt={item.title}
+                    src={`${IMAGE_BASE_URL}/w300/${item.poster_path}`}
+                    fallbackSrc="https://placehold.co/100x150?text=No Image"
+                  />
+                </div>
+
                 <div className={classes.textBlock}>
                   <Text mb="xs" size="lg" fw={500}>
                     {item.title}

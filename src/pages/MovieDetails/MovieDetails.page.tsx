@@ -1,9 +1,9 @@
 import { Image, Pill, Text, Title } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-import Layout from '../../components/Layout/Layout';
 import { IMAGE_BASE_URL } from '../../constants';
 import useFetchDetails from '../../hooks/useFetchDetails';
 import classes from './MovieDetails.module.scss';
+import Layout from '../../components/Layout/Layout';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -12,13 +12,15 @@ const MovieDetails = () => {
   return (
     <Layout>
       <div className={classes.container}>
-        <Image
-          className={classes.image}
-          radius="md"
-          alt={details?.title}
-          src={`${IMAGE_BASE_URL}/w780/${details?.poster_path}`}
-          fallbackSrc="https://placehold.co/300x450?text=No Image"
-        />
+        <div className={classes.image}>
+          <Image
+            radius="md"
+            alt={details?.title}
+            src={`${IMAGE_BASE_URL}/w780/${details?.poster_path}`}
+            fallbackSrc="https://placehold.co/300x450?text=No Image"
+          />
+        </div>
+
         <div className={classes.description}>
           <Title mb="xs" className={classes.title}>
             {details?.title}

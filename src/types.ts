@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface SearchResponse {
   page: number;
   total_pages: number;
@@ -18,4 +20,9 @@ export interface Movie {
 export interface Genre {
   id: number;
   name: string;
+}
+
+export interface Query {
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
 }

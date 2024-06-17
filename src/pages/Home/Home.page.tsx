@@ -1,26 +1,21 @@
 import { Pagination, TextInput } from '@mantine/core';
-import { Dispatch, SetStateAction, useState } from 'react';
-import Layout from '../../components/Layout/Layout';
+import { useState } from 'react';
 import MovieList from '../../components/MovieList/MovieList';
+import useQueryValue from '../../hooks/useQueryValue';
 import useSearchMovies from '../../hooks/useSearchMovies';
 import { search } from '../../services/movieService';
-import classes from './Home.module.scss';
 import { SearchResponse } from '../../types';
+import classes from './Home.module.scss';
+import Layout from '../../components/Layout/Layout';
 
 const ITEMS_PER_PAGE = 10;
 const TMDB_ITEMS_PER_PAGE = 20;
 const QUOTIENT = TMDB_ITEMS_PER_PAGE / ITEMS_PER_PAGE;
 
-const HomePage = ({
-  query,
-  setQuery,
-}: {
-  query: string;
-  setQuery: Dispatch<SetStateAction<string>>;
-}) => {
+const HomePage = () => {
   const [activePage, setPage] = useState<number>(1);
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
-
+  const { query, setQuery } = useQueryValue();
   useSearchMovies(query, setPage, setSearchResponse);
 
   const totalPages =

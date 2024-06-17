@@ -6,9 +6,9 @@ const useFetchDetails = (movieId?: string) => {
   const [details, setDetails] = useState<Movie>();
 
   useEffect(() => {
-    (async (id) => {
-      if (id) {
-        const movieDetails = await getDetails(id);
+    (async (movieId) => {
+      if (movieId) {
+        const movieDetails = await getDetails(movieId);
         setDetails(movieDetails);
       }
     })(movieId);

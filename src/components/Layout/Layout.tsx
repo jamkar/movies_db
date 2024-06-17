@@ -5,15 +5,9 @@ import classes from './Layout.module.scss';
 const Layout = ({ children }: React.PropsWithChildren) => {
   return (
     <AppShell header={{ height: 60 }} padding="md">
-      <AppShell.Header>
+      <AppShell.Header className={classes.header}>
         <Link to="/" className={classes.home}>
-          <Image
-            fit="contain"
-            h={40}
-            w={40}
-            alt="Home"
-            src="../../../public/tmdb-logo.svg"
-          />
+          <Image fit="contain" h={40} w={40} alt="Home" src="/tmdb-logo.svg" />
         </Link>
       </AppShell.Header>
       <AppShell.Main className={classes.main}>{children}</AppShell.Main>
