@@ -25,6 +25,7 @@ export const search = async (
 };
 
 export const getDetails = async (id: string): Promise<Movie> => {
+  console.log('getDetails called');
   const url = `${API_BASE_URL}/movie/${id}`;
   const response = await fetch(url, options);
   return response.json();

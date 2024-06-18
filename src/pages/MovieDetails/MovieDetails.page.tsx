@@ -7,20 +7,22 @@ import Layout from '../../components/Layout/Layout';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
+  console.log('movieId: ', movieId);
   const details = useFetchDetails(movieId);
+  console.log('details: ', details);
 
   return (
     <Layout>
       <div className={classes.container}>
         <div className={classes.image}>
           <Image
+            className={classes.image}
             radius="md"
             alt={details?.title}
             src={`${IMAGE_BASE_URL}/w780/${details?.poster_path}`}
             fallbackSrc="https://placehold.co/300x450?text=No Image"
           />
         </div>
-
         <div className={classes.description}>
           <Title mb="xs" className={classes.title}>
             {details?.title}

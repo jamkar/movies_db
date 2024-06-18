@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
-import { fireEvent, render, screen } from '../../test-utils';
-import { mockSearchResponse } from './Home.mocks';
-import HomePage from './Home.page';
-import { search } from '../../services/movieService';
 import { Mock } from 'vitest';
+import { search } from '../../services/movieService';
+import { fireEvent, render, screen } from '../../test-utils';
+import { mockSearchResponse } from '../../services/movieService.mocks';
+import HomePage from './Home.page';
 
 vi.mock('../../services/movieService');
 
@@ -37,6 +37,17 @@ describe('HomePage', () => {
 
     const paginationButtons = await screen.findAllByRole('button');
     expect(paginationButtons).toHaveLength(7);
+
+    expect(search).toHaveBeenCalledTimes(1);
+    expect(search).toHaveBeenLastCalledWith('home alone');
+  });
+
+  it('calls search movies service when user clicks on a page button', async () => {
+    render(<HomePage />);
+
+    fireEvent.change(await screen.findByPlaceholderText('Search movies...'), {
+      target: { value: 'home alone' },
+    });
 
     fireEvent.click(await screen.findByRole('button', { name: '2' }));
 
