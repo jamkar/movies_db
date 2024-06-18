@@ -7,9 +7,7 @@ import Layout from '../../components/Layout/Layout';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  console.log('movieId: ', movieId);
   const details = useFetchDetails(movieId);
-  console.log('details: ', details);
 
   return (
     <Layout>
