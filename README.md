@@ -1,5 +1,19 @@
-# Mantine Vite template
+# Movies DB
 
-Get started with the template by clicking `Use this template` button on the top of the page.
+#### Installation
 
-[Documentation](https://mantine.dev/guides/vite/)
+```bash
+npm i
+```
+
+#### Starting the application
+
+```bash
+npm run dev
+```
+
+#### Running tests
+
+```bash
+npm t
+```
