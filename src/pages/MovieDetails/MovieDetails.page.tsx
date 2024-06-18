@@ -38,7 +38,9 @@ const MovieDetails = () => {
           <Text mb="xs" size="md" c="dimmed">
             Rating: {details?.vote_average}
           </Text>
-          <Text size="lg">Overview</Text>
+          <Text mb="xs" size="lg">
+            Overview
+          </Text>
           <Text size="md">{details?.overview}</Text>
         </div>
       </div>
